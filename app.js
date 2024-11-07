@@ -4,11 +4,9 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Define cell size and grid dimensions
-const cellSize = 10;
-const numRows = 500;
-const numCols = 500;
-// const numRows = Math.floor(canvas.height / cellSize);
-// const numCols = Math.floor(canvas.width / cellSize);
+const numRows = 200;
+const numCols = 200;
+const cellSize = 5;
 
 // Funciton toinitialize the grid
 function createGrid() {
@@ -44,6 +42,7 @@ function createGrid() {
             */
 
                 let rand = Math.random() > 0.7 ? 1 : 0;
+                
                 if (rand) {
                     grid[i][j] = Math.random() > 0.7 ? 1 : 0;   // Random initialization
                 } else {
