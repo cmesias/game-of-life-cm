@@ -5,8 +5,10 @@ const ctx = canvas.getContext('2d');
 
 // Define cell size and grid dimensions
 const cellSize = 10;
-const numRows = Math.floor(canvas.height / cellSize);
-const numCols = Math.floor(canvas.width / cellSize);
+const numRows = 500;
+const numCols = 500;
+// const numRows = Math.floor(canvas.height / cellSize);
+// const numCols = Math.floor(canvas.width / cellSize);
 
 // Funciton toinitialize the grid
 function createGrid() {
@@ -40,7 +42,13 @@ function createGrid() {
 
                 Assign a value (eiter 1 or 0) to the specific cell in the i-th row and j-th column of the grid
             */
-            grid[i][j] = Math.random() > 0.7 ? 1 : 0;   // Random initialization
+
+                let rand = Math.random() > 0.7 ? 1 : 0;
+                if (rand) {
+                    grid[i][j] = Math.random() > 0.7 ? 1 : 0;   // Random initialization
+                } else {
+                    grid[i][j] = Math.random() > 0.6 ? 1 : 0;   // Random initialization
+                }
         }
     }
     return grid;
@@ -153,6 +161,40 @@ function mainLoop() {
     }
 }
 
+// Event listener to handle mouse clicks for adding/removing cells
+canvas.addEventListener('click', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const col = Math.floor(x / cellSize);
+    const row = Math.floor(y / cellSize);
+
+    // Left-click: Toggle cell (add/remove life)
+    if (e.button === 0) {
+        grid[row][col] = 1; // Add a live cell (1)
+    }
+
+    drawGrid(); // Redraw grid after clicking
+});
+
+// Event listener to handle right-click menu from appearing
+canvas.addEventListener('contextmenu', function(e) {
+    e.preventDefault(); // Prevent right-click menu from appearing
+
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const col = Math.floor(x / cellSize);
+    const row = Math.floor(y / cellSize);
+    
+    // Right-click: Remove te cell (set it to 0)
+    grid[row][col] = 0;
+
+    drawGrid(); // Redraw grid after right-click
+})
+
 // Add event listener to 'startButton'
 document.getElementById('startButton').addEventListener('click', function()
 {
@@ -189,3 +231,5 @@ document.getElementById('restartButton').addEventListener('click', function()
     drawGrid();
 });
 
+// Initial drawing of the grid
+drawGrid();
