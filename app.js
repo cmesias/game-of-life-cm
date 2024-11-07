@@ -6,13 +6,13 @@ const ctx = canvas.getContext('2d');
 // Define cell size and grid dimensions
 const cellSize = 10;
 const numRows = Math.floor(canvas.height / cellSize);
-const numCols = Math.floor(canvas.widt / cellSize);
+const numCols = Math.floor(canvas.width / cellSize);
 
 // Funciton toinitialize the grid
 function createGrid() {
     const grid = [];
 
-    for (let i=0; i < numRows; i++) {
+    for (let i = 0; i < numRows; i++) {
         
         /* Example, outer loop
 
@@ -27,7 +27,7 @@ function createGrid() {
         */
         grid[i] = [];
 
-        for (let j=0; j < numCols; j++) {
+        for (let j = 0; j < numCols; j++) {
 
             /* Example, inner loop
 
@@ -43,6 +43,7 @@ function createGrid() {
             grid[i][j] = Math.random() > 0.7 ? 1 : 0;   // Random initialization
         }
     }
+    return grid;
 }
 
 let grid = createGrid();
@@ -56,8 +57,8 @@ function drawGrid()
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
 
     // Loop through each cell
-    for (let i=0; i < numRows; i++) {
-        for (let j=0; j < numCols; j++) {
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
 
             // If cell is alive, render it black
             if (grid[i][j] === 1) {
@@ -74,14 +75,14 @@ function updateGrid() {
     // new grid
     const newGrid = [];
 
-    for (let i=0; i < numRows; i++) {
+    for (let i = 0; i < numRows; i++) {
 
         // Initialize an empty array at the i-th position of the grid
         newGrid[i] = [];
 
-        for (let j=0; j < numCols; j++) {
+        for (let j = 0; j < numCols; j++) {
 
-            const neighbots = countNeighbors(i, j);
+            const neighbors = countNeighbors(i, j);
 
             // If cell is alive and neighbors is less than 2 or greater than 3, set cell 'dead'
             if (grid[i][j] === 1 && (neighbors < 2 || neighbors > 3)) {
@@ -108,22 +109,31 @@ function updateGrid() {
 function countNeighbors(row, col) {
     let count = 0;
 
-    // Loop through i: -1, 0, 1
+    // Loop through i: -1, 0, 1, checks rows above, self and below current cell
     for (let i = -1; i <= 1; i++)
     {
-        // Loop through j: -1, 0, 1
-        for (let j = -1; j <=1; i++)
+        // Loop through j: -1, 0, 1, checks left, self and right of current cell
+        for (let j = -1; j <=1; j++)
         {
-            // Check current row index + -1, 0, and 1
-            // essentially is checking above it and below it
-            const r = row + i;
+            // Calculate neighboring ro index by adding i to current row index
+            const r = row + i;  // r represents the row of the neighboring cell
 
-            // Check current col index + -1, 0, and 1
-            // Essentially checks cells next to it
-            const c = col + j;
+            // Calculate neighboring column index by adding j to current column index
+            const c = col + j;  // c represents the column of neighboring cell
 
-            // Increase count if 
-            if (r >= 0 && r < numRows && c >= 0 && c < numCols && !(i === 0 && j ===0)) {
+            // Ensure calculated row and column are within grid bounds
+            // Make sure not to count current cell itself (i === 0 && j === 0 is the current cell)
+
+            // If row or neighboring cells is within bounds
+            if (r >= 0 && r < numRows && 
+                
+                // if column of neighboring cell is within bounds
+                c >= 0 && c < numCols && 
+                
+                // If not current cell itself
+                !(i === 0 && j === 0)) {
+
+                // Increase current cell's neighbor count
                 count += grid[r][c];
             }
         }
@@ -178,3 +188,4 @@ document.getElementById('restartButton').addEventListener('click', function()
     // Draw grid
     drawGrid();
 });
+
