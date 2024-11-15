@@ -150,15 +150,62 @@ function countNeighbors(row, col) {
 }
 
 // Main loop, update and draw grid
+let frames = 0;
+let frameSpeed = 5;
 function mainLoop() {
-    updateGrid();
-    drawGrid();
+
+    // Handle frame speed
+    frames += frameSpeed;
+
+    if (frames > 60) {
+        updateGrid();
+        drawGrid();
+        frames = 0;
+    }
 
     // If game is running, set 'animationId'
     if (isRunning) {
         animationId = requestAnimationFrame(mainLoop);
     }
 }
+
+// Increase and decrease speed of game
+let slowerBtn = document.getElementById('slowerButton');
+let fasterBtn = document.getElementById('fasterButton');
+
+slowerBtn.addEventListener('click', function()
+{
+    // Decrease frame speed
+    frameSpeed -= 5;
+
+    // Set frameSpeed max
+    if (frameSpeed < 5) {
+        frameSpeed = 5;
+    }
+
+    // Get div of 'speedVal'
+    let speedVal = document.getElementById('speedVal');
+
+    // Set innerText
+    speedVal.innerText = `Speed: ${frameSpeed}`;
+    console.log(`Speed: ${frameSpeed}`);
+});
+
+fasterBtn.addEventListener('click', function()
+{
+    // Increase frame speed
+    frameSpeed += 5;
+
+    // Set frameSpeed max
+    if (frameSpeed > 60) {
+        frameSpeed = 60;
+    }
+
+    // Set innerText
+    speedVal.innerText = `Speed: ${frameSpeed}`;
+    console.log(`Speed: ${frameSpeed}`);
+});
+
 
 // Event listener to handle mouse clicks for adding/removing cells
 canvas.addEventListener('click', function(e) {
