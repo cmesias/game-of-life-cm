@@ -3,15 +3,9 @@
 }
 
 body {
-    background-color: grey;
+    background-color: white;
 }
 
 canvas {
     border: 1px solid black;
-}
-
-#speedVal {
-    padding: 5px;
-    border: 1px black solid;
-    width: 100px;
 }

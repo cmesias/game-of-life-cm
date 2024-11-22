@@ -60,6 +60,7 @@ let animationId = null;
 // Function to draw the grid
 function drawGrid()
 {
+
     // Clear canvas
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
 
@@ -151,7 +152,7 @@ function countNeighbors(row, col) {
 
 // Main loop, update and draw grid
 let frames = 0;
-let frameSpeed = 5;
+let frameSpeed = 15;
 function mainLoop() {
 
     // Handle frame speed
@@ -169,41 +170,40 @@ function mainLoop() {
     }
 }
 
-// Increase and decrease speed of game
-let slowerBtn = document.getElementById('slowerButton');
-let fasterBtn = document.getElementById('fasterButton');
-
-slowerBtn.addEventListener('click', function()
+// Slower button, on click
+$('#slowerButton').on('click', function()
 {
     // Decrease frame speed
     frameSpeed -= 5;
 
-    // Set frameSpeed max
-    if (frameSpeed < 5) {
+    // If frameSpeed reaches lowest max, disable slower button
+    if (frameSpeed <= 5) {
         frameSpeed = 5;
+        $('#slowerButton').attr('disabled', true);
+    } 
+    
+    // Enable faster button
+    else {
+        $('#fasterButton').attr('disabled', false);
     }
-
-    // Get div of 'speedVal'
-    let speedVal = document.getElementById('speedVal');
-
-    // Set innerText
-    speedVal.innerText = `Speed: ${frameSpeed}`;
-    console.log(`Speed: ${frameSpeed}`);
 });
 
-fasterBtn.addEventListener('click', function()
+// Faster button, on click
+$('#fasterButton').on('click', function()
 {
     // Increase frame speed
     frameSpeed += 5;
 
-    // Set frameSpeed max
-    if (frameSpeed > 60) {
+    // If frameSpeed reaches max, disable faster button
+    if (frameSpeed >= 60) {
         frameSpeed = 60;
+        $('#fasterButton').attr('disabled', true);
+    } 
+    
+    // Enable slower button
+    else {
+        $('#slowerButton').attr('disabled', false);
     }
-
-    // Set innerText
-    speedVal.innerText = `Speed: ${frameSpeed}`;
-    console.log(`Speed: ${frameSpeed}`);
 });
 
 
@@ -242,7 +242,7 @@ canvas.addEventListener('contextmenu', function(e) {
 })
 
 // Add event listener to 'startButton'
-document.getElementById('startButton').addEventListener('click', function()
+$('#startButton').on('click', function()
 {
     // Run game
     if (!isRunning) {
@@ -252,7 +252,7 @@ document.getElementById('startButton').addEventListener('click', function()
 });
 
 // Add event listener to 'pauseButton'
-document.getElementById('pauseButton').addEventListener('click', function()
+$('#pauseButton').on('click', function()
 {
     // Pause game
     isRunning = false;
@@ -262,7 +262,7 @@ document.getElementById('pauseButton').addEventListener('click', function()
 });
 
 // Add event listener to 'restartButton'
-document.getElementById('restartButton').addEventListener('click', function()
+$('#restartButton').on('click', function()
 {
     // Stop game
     isRunning = false;
