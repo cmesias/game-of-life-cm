@@ -9,3 +9,13 @@ body {
 canvas {
     border: 1px solid black;
 }
+
+a {
+    color: green;
+    text-decoration: none;
+}
+
+a:hover {
+    color: orange;
+    text-decoration: underline;
+}

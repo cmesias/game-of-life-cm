@@ -41,13 +41,8 @@ function createGrid() {
                 Assign a value (eiter 1 or 0) to the specific cell in the i-th row and j-th column of the grid
             */
 
-                let rand = Math.random() > 0.7 ? 1 : 0;
-                
-                if (rand) {
-                    grid[i][j] = Math.random() > 0.7 ? 1 : 0;   // Random initialization
-                } else {
-                    grid[i][j] = Math.random() > 0.6 ? 1 : 0;   // Random initialization
-                }
+            let rand = Math.random() > 0.7 ? 1 : 0;
+            grid[i][j] = Math.random() > 0.7 ? 1 : 0;   // Random initialization
         }
     }
     return grid;
@@ -60,7 +55,6 @@ let animationId = null;
 // Function to draw the grid
 function drawGrid()
 {
-
     // Clear canvas
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
 
