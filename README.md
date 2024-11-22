@@ -4,4 +4,5 @@
 Live Website: https://cmesias.github.io/game-of-life-cm/
 
 # Screenshot
-![image](https://github.com/user-attachments/assets/9862e8d8-ace5-4341-bea3-042ce097965e)
+![image](https://github.com/user-attachments/assets/f7d522c7-c020-42c9-9ccb-eb8da6722f9b)
+
